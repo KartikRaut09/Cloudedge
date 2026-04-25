@@ -536,9 +536,15 @@ function computeShapedReward(actionName, state) {
         const target = LLM_TARGETS[metric];
         const delta = effects[metric];
         if (current > target) {
+            // Above target: reward improvements, penalize worsening
             reward += delta < 0 ? Math.min(Math.abs(delta), current - target) * 0.1 : -(delta * 0.05);
         } else {
-            if (delta > 0) reward -= delta * 0.15;
+            // Below target: only penalize if action pushes metric ABOVE target
+            const projected = current + delta;
+            if (projected > target) {
+                reward -= (projected - target) * 0.15;
+            }
+            // No penalty if metric stays below target (safe headroom)
         }
     }
     const gaps = {};
