@@ -145,7 +145,7 @@ class Boardroom {
             const type = name === 'ResourceAgent' ? 'resource' : name === 'CostAgent' ? 'cost' : 'sustainability';
             log.push({ agent: name.replace('Agent',''), text: reason, type });
         }
-        log.push({ agent: 'Boardroom', text: 'Decision: crisis_response — add 5 servers in canada-hydro', type: 'decision' });
+        log.push({ agent: 'Boardroom', text: 'Decision: crisis_response — deploying 5 reserved instances in low-carbon region', type: 'decision' });
         return { action: { action: 'crisis_response', server_count: 5, region: 'canada-hydro' }, log };
     }
 

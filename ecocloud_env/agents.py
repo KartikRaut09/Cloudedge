@@ -126,7 +126,7 @@ class Boardroom:
             if verbose:
                 print(line)
         decision = CloudAction(action="crisis_response", server_count=5, region="canada-hydro")
-        decision_line = "[BOARDROOM] Decision: crisis_response - add 5 servers in canada-hydro"
+        decision_line = "[BOARDROOM] Decision: crisis_response - deploying 5 reserved instances in low-carbon region"
         log.append(decision_line)
         if verbose:
             print(decision_line)
