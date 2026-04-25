@@ -60,7 +60,8 @@ def make_env_and_run(action_name: str, env: EcoCloudEnvironment) -> tuple[float,
 
 def extract_action(text: str) -> str:
     """Parse the model's output to extract an action name."""
-    text = text.strip().lower()
+    # Normalize: lowercase, replace spaces/hyphens with underscores
+    text = text.strip().lower().replace(" ", "_").replace("-", "_")
     valid = {"scale_up", "scale_down", "optimize_energy", "migrate_region"}
     # Direct match
     if text in valid:
@@ -69,7 +70,20 @@ def extract_action(text: str) -> str:
     for action in valid:
         if action in text:
             return action
-    return "invalid"
+    # Also try partial matches for common model outputs
+    partial_map = {
+        "scale": "scale_up",
+        "up": "scale_up",
+        "down": "scale_down",
+        "optim": "optimize_energy",
+        "energy": "optimize_energy",
+        "migrat": "migrate_region",
+        "region": "migrate_region",
+    }
+    for key, action in partial_map.items():
+        if key in text:
+            return action
+    return "optimize_energy"  # safe fallback instead of penalty
 
 
 def reward_func(completions, **kwargs) -> list[float]:
@@ -95,8 +109,7 @@ def reward_func(completions, **kwargs) -> list[float]:
 
         for line in lines:
             action = extract_action(line)
-            if action == "invalid":
-                total_reward -= 5.0
+            if not line.strip():
                 continue
             obs = env.step(CloudAction(action=action))
             total_reward += float(obs.last_reward)
