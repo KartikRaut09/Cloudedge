@@ -120,9 +120,22 @@ Each action is scored based on how well it closes the gap between current metric
 reward = Σ (gap_closure × weight) + worst_metric_bonus
 ```
 
-- Actions that reduce an over-target metric earn +0.1 per unit
-- Actions that worsen metrics are penalized at -0.05 per unit  
-- A +2.0 bonus rewards targeting the worst metric first
+- Actions that reduce an over-target metric earn **+0.1 per unit**
+- Actions that worsen metrics are penalized at **-0.05 per unit**
+- A **+2.0 bonus** rewards targeting the worst metric first
+
+#### Scoring Example
+
+Given a crisis state: `latency=280ms, cost=$620/hr, carbon=380` (all above target):
+
+| Action | Latency Effect | Cost Effect | Carbon Effect | Worst Metric Bonus | **Total Reward** |
+|--------|---------------|-------------|---------------|-------------------|-----------------|
+| `optimize_energy` | +10 → -0.5 | -20 → +2.0 | -40 → +4.0 | ✅ +2.0 | **+7.5** |
+| `scale_down` | +25 → -1.25 | -35 → +3.5 | -15 → +1.5 | ❌ 0 | **+3.75** |
+| `migrate_region` | +15 → -0.75 | +10 → -0.5 | -50 → +5.0 | ✅ +2.0 | **+5.75** |
+| `scale_up` | -40 → +4.0 | +30 → -1.5 | +20 → -1.0 | ❌ 0 | **+1.5** |
+
+The model learns from thousands of these comparisons that `optimize_energy` consistently scores highest when all metrics are above target — which is why GRPO training converged to this action as the dominant policy.
 
 ---
 
