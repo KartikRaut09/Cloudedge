@@ -13,7 +13,7 @@ class ResourceAgent:
     ) -> tuple[str, str]:
         """Recommend an action based on latency level and trend."""
         if obs.crisis_just_happened:
-            return ("crisis_response", "We need 10 more servers now!")
+            return ("crisis_response", "Response time degrading — deploying horizontal scale-up immediately.")
         if obs.latency > 200 and (last_obs is None or obs.latency >= last_obs.latency):
             return ("scale_up", "Latency high and not improving")
         if obs.latency > 150:
@@ -29,7 +29,7 @@ class CostAgent:
     ) -> tuple[str, str]:
         """Recommend an action based on cost level and trend."""
         if obs.crisis_just_happened:
-            return ("crisis_response", "Wait, 10 is too expensive. Let's start with 5.")
+            return ("crisis_response", "Cost at $620/hr, target is $400. Switching to reserved capacity first.")
         if obs.cost > 450 and obs.latency > 180:
             return ("optimize_energy", "Cost high, but latency is too fragile for scale-down")
         if obs.cost > 450 and (last_obs is None or obs.cost >= last_obs.cost):
@@ -50,7 +50,7 @@ class SustainabilityAgent:
         """Recommend an action based on carbon level."""
         del last_obs
         if obs.crisis_just_happened:
-            return ("crisis_response", "And make sure those 5 are in the Canada region because they are using 100% hydro-power right now.")
+            return ("crisis_response", "Emissions exceeding target — activating energy optimization protocol.")
         if obs.carbon > 350:
             return ("migrate_region", "Carbon critical - migrating to green data centre")
         if obs.carbon > 280:

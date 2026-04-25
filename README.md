@@ -35,9 +35,9 @@ Three agents propose actions every step, then a coordinator picks the best move:
 
 | Agent | Priority | Crisis Response |
 |-------|----------|-----------------|
-| **ResourceAgent** | Minimise latency | *"We need 10 more servers now!"* |
-| **CostAgent** | Minimise cost | *"10 is too expensive. Let's start with 5."* |
-| **SustainabilityAgent** | Minimise carbon | *"Make sure those 5 are in Canada — 100% hydro-power!"* |
+| **ResourceAgent** | Minimise latency | *"Response time degrading — deploying horizontal scale-up immediately."* |
+| **CostAgent** | Minimise cost | *"Cost at $620/hr, target is $400. Switching to reserved capacity first."* |
+| **SustainabilityAgent** | Minimise carbon | *"Emissions exceeding target — activating energy optimization protocol."* |
 
 The final action is chosen through voting, safety overrides, anti-oscillation detection, and goal-directed recovery phases.
 

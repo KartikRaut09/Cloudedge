@@ -71,7 +71,7 @@ class EcoCloudEnvironment {
 // --- Agents (faithful port of agents.py) ---
 class ResourceAgent {
     propose(obs, lastObs) {
-        if (obs.crisis_just_happened) return ['crisis_response', 'We need 10 more servers now!'];
+        if (obs.crisis_just_happened) return ['crisis_response', 'Response time degrading — deploying horizontal scale-up immediately.'];
         if (obs.latency > 200 && (!lastObs || obs.latency >= lastObs.latency)) return ['scale_up', 'Latency high and not improving'];
         if (obs.latency > 150) return ['scale_up', 'Latency above 150ms target'];
         return ['optimize_energy', 'Latency OK'];
@@ -80,7 +80,7 @@ class ResourceAgent {
 
 class CostAgent {
     propose(obs, lastObs) {
-        if (obs.crisis_just_happened) return ['crisis_response', "Wait, 10 is too expensive. Let's start with 5."];
+        if (obs.crisis_just_happened) return ['crisis_response', 'Cost at $620/hr, target is $400. Switching to reserved capacity first.'];
         if (obs.cost > 450 && obs.latency > 180) return ['optimize_energy', 'Cost high, but latency is too fragile for scale-down'];
         if (obs.cost > 450 && (!lastObs || obs.cost >= lastObs.cost)) return ['scale_down', 'Cost high and not improving'];
         if (obs.cost > 400 && obs.latency > 160) return ['optimize_energy', 'Cost over budget - trim efficiently'];
@@ -91,7 +91,7 @@ class CostAgent {
 
 class SustainabilityAgent {
     propose(obs) {
-        if (obs.crisis_just_happened) return ['crisis_response', 'Make sure those 5 are in the Canada region — 100% hydro-power!'];
+        if (obs.crisis_just_happened) return ['crisis_response', 'Emissions exceeding target — activating energy optimization protocol.'];
         if (obs.carbon > 350) return ['migrate_region', 'Carbon critical - migrating to green data centre'];
         if (obs.carbon > 280) return ['migrate_region', 'High carbon - shifting to low-carbon region'];
         if (obs.carbon > 220) return ['optimize_energy', 'Carbon above target - optimising local energy'];
