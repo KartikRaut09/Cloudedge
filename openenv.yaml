@@ -1,0 +1,6 @@
+name: cloudedge
+version: "1.0.0"
+description: "Multi-agent LLM simulator for sustainable cloud crisis management. Three AI agents negotiate latency, cost, and carbon trade-offs under pressure."
+action: CloudAction
+observation: CloudObservation
+spec_version: 1
