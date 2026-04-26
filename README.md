@@ -145,12 +145,24 @@ requirements.txt         # Project dependencies
 ## 🏃 Quick Start & Links
 
 ```bash
-# Install dependencies
+# 1. Install dependencies
 pip install -r requirements.txt
 
-# Start the OpenEnv server and visual dashboard locally
+# 2. Start the OpenEnv API server & Visual Dashboard
 uvicorn ecocloud_env.server.app:app --host 0.0.0.0 --port 7860
+# (Then open http://localhost:7860 in your browser)
+
+# 3. Run a local simulation episode (Auto-detects trained policy)
+python run_local.py
+
+# 4. Compare untrained vs trained policies
+python run_local.py heuristic   # Runs the baseline
+python run_local.py trained     # Runs the trained Q-policy
+
+# 5. Re-run local training & generate new graphs
+python ecocloud_env/visualize.py
 ```
+
 - **Hugging Face Space:** [kartikraut09/cloudedge](https://huggingface.co/spaces/kartikraut09/cloudedge)
 - **Trained Model:** [kartikraut09/ecocloud-grpo-qwen](https://huggingface.co/kartikraut09/ecocloud-grpo-qwen)
 - **Training Notebook:** `notebooks/EcoCloud_TRL_GRPO_Colab.ipynb`
