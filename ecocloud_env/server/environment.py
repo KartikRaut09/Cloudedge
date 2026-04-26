@@ -1,4 +1,4 @@
-"""OpenEnv server environment for the EcoCloud War Room simulation."""
+"""OpenEnv server environment for the CloudEdge simulation."""
 
 from __future__ import annotations
 

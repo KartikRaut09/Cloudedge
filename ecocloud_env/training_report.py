@@ -1,4 +1,4 @@
-"""Generate true training graphs and summaries for EcoCloud War Room."""
+"""Generate true training graphs and summaries for CloudEdge."""
 
 from __future__ import annotations
 
@@ -54,7 +54,7 @@ def graph1(training: dict[str, list[float] | list[int]]) -> None:
     success_roll = [np.mean(success[max(0, i - 9) : i + 1]) * 100 for i in range(len(success))]
     fig, axes = plt.subplots(2, 2, figsize=(14, 9))
     fig.suptitle(
-        "EcoCloud War Room - Training Progress\n"
+        "CloudEdge - Training Progress\n"
         f"Q-learning over 60 Episodes | Generated: {timestamp}",
         fontsize=13,
         fontweight="bold",
@@ -111,7 +111,7 @@ def graph2(
     trained_cost = np.mean(trained["episode_final_cost"])
     fig, axes = plt.subplots(1, 3, figsize=(14, 5))
     fig.suptitle(
-        "EcoCloud War Room - Baseline vs Trained Policy\n"
+        "CloudEdge - Baseline vs Trained Policy\n"
         "Heuristic Boardroom vs Q-Learned Boardroom",
         fontsize=13,
         fontweight="bold",
@@ -151,7 +151,7 @@ def graph3(training: dict[str, list[float] | list[int]]) -> None:
     """Save a step-by-step comparison of the first and final training episodes."""
     fig, axes = plt.subplots(1, 3, figsize=(15, 5))
     fig.suptitle(
-        "EcoCloud War Room - Episode 1 vs Final Training Episode\n"
+        "CloudEdge - Episode 1 vs Final Training Episode\n"
         "Shows how the learned policy changes behaviour",
         fontsize=13,
         fontweight="bold",
@@ -191,7 +191,7 @@ def graph4(training: dict[str, list[float] | list[int]]) -> None:
     carbon_roll = np.array(rolling_avg(carbon))
     fig, axes = plt.subplots(2, 2, figsize=(14, 9))
     fig.suptitle(
-        "EcoCloud War Room - Sustainability and Recovery Signals During Training",
+        "CloudEdge - Sustainability and Recovery Signals During Training",
         fontsize=13,
         fontweight="bold",
     )
@@ -253,7 +253,7 @@ def graph5(
     ]
     fig, ax = plt.subplots(figsize=(10, 4))
     ax.axis("off")
-    fig.suptitle("EcoCloud War Room - Training Summary Report", fontsize=13, fontweight="bold", y=0.98)
+    fig.suptitle("CloudEdge - Training Summary Report", fontsize=13, fontweight="bold", y=0.98)
     table = ax.table(cellText=table_data[1:], colLabels=table_data[0], cellLoc="center", loc="center", bbox=[0, 0, 1, 1])
     table.auto_set_font_size(False)
     table.set_fontsize(11)
@@ -291,7 +291,7 @@ def main() -> None:
     best_eval_success = max(training_metrics["eval_success"]) * 100
     print()
     print("=" * 60)
-    print("  ECOCLOUD WAR ROOM - TRAINING COMPLETE")
+    print("  CLOUDEDGE - TRAINING COMPLETE")
     print("=" * 60)
     print(f"  Graphs saved to : {GRAPHS_DIR}")
     print(f"  Policy saved to : {POLICY_PATH}")

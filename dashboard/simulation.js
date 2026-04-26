@@ -1,4 +1,4 @@
-/* EcoCloud War Room — Dashboard Simulation Engine */
+/* CloudEdge — Dashboard Simulation Engine */
 
 // --- Seeded RNG ---
 class SeededRNG {

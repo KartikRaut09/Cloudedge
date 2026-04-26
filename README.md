@@ -1,6 +1,6 @@
-# 🌩️ EcoCloud War Room
+# ⚡ CloudEdge — Multi-Agent LLM Simulator for Sustainable Cloud Crisis Management
 
-**A multi-agent cloud crisis simulator where three AI agents negotiate latency, cost, and carbon trade-offs under pressure.**
+**Three AI agents negotiate latency, cost, and carbon trade-offs under pressure — trained with GRPO reinforcement learning.**
 
 Built for the **Meta PyTorch OpenEnv Hackathon Grand Finale**.
 
@@ -23,7 +23,7 @@ Cloud infrastructure decisions force impossible trade-offs:
 
 No single metric can be optimised in isolation. Meanwhile, **crisis spikes** randomly destabilise everything, and the system must recover across all three dimensions simultaneously.
 
-**EcoCloud War Room** trains an LLM to control this system by negotiating between three specialist agents — each with a different priority.
+**CloudEdge** trains an LLM to control this system by negotiating between three specialist agents — each with a different priority.
 
 ---
 

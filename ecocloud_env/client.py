@@ -1,4 +1,4 @@
-"""Client helpers for connecting to the EcoCloud War Room environment."""
+"""Client helpers for connecting to the CloudEdge environment."""
 
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from .models import CloudAction, CloudObservation
 
 
 class EcoCloudEnv(EnvClient[CloudAction, CloudObservation, State]):
-    """Client for the EcoCloud War Room OpenEnv environment."""
+    """Client for the CloudEdge OpenEnv environment."""
 
     action_class = CloudAction
     observation_class = CloudObservation

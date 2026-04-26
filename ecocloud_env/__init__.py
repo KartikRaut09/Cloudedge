@@ -1,2 +1,2 @@
-"""EcoCloud War Room OpenEnv package."""
+"""CloudEdge OpenEnv package."""
 

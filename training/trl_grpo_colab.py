@@ -1,4 +1,4 @@
-"""Colab-ready GRPO training script for EcoCloud War Room.
+"""Colab-ready GRPO training script for CloudEdge.
 
 Run on Colab with GPU:
     pip install -e .
@@ -32,7 +32,7 @@ ACTIONS = {
 TARGETS = {"latency": 150, "cost": 400, "carbon": 220}
 
 SYSTEM_PROMPT = (
-    "You are the EcoCloud War Room controller managing a cloud platform in crisis.\n"
+    "You are the CloudEdge controller managing a cloud platform in crisis.\n"
     "Pick the BEST single action for the current state. Respond with ONLY the action name.\n\n"
     "Actions:\n"
     "  scale_up        → latency -40, cost +30, carbon +20\n"
@@ -176,7 +176,7 @@ def main() -> None:
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     print("=" * 60)
-    print("  EcoCloud War Room — GRPO Training (v2)")
+    print("  CloudEdge — GRPO Training (v2)")
     print(f"  Model: {MODEL_NAME}")
     print(f"  Prompts: {TRAIN_PROMPTS}")
     print(f"  Started: {datetime.now().isoformat()}")

@@ -1,2 +1,2 @@
-"""Server package for EcoCloud War Room."""
+"""Server package for CloudEdge."""
 

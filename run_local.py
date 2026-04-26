@@ -1,4 +1,4 @@
-"""Run one local EcoCloud War Room episode without starting the server."""
+"""Run one local CloudEdge episode without starting the server."""
 
 from __future__ import annotations
 

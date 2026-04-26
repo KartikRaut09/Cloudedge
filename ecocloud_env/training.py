@@ -1,4 +1,4 @@
-"""Training and evaluation utilities for EcoCloud War Room."""
+"""Training and evaluation utilities for CloudEdge."""
 
 from __future__ import annotations
 

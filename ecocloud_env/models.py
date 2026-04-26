@@ -1,4 +1,4 @@
-"""Pydantic models for EcoCloud War Room state, actions, and observations."""
+"""Pydantic models for CloudEdge state, actions, and observations."""
 
 from __future__ import annotations
 
