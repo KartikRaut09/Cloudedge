@@ -1,3 +1,12 @@
+---
+title: CloudEdge
+emoji: 🌍
+colorFrom: green
+colorTo: blue
+sdk: docker
+pinned: false
+---
+
 # ⚡ CloudEdge — Multi-Agent LLM Simulator for Sustainable Cloud Crisis Management
 
 **Three AI agents negotiate latency, cost, and carbon trade-offs under pressure — trained with GRPO reinforcement learning.**

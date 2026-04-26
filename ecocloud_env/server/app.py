@@ -27,4 +27,4 @@ if DASHBOARD_DIR.exists():
         """Serve the dashboard homepage."""
         return FileResponse(DASHBOARD_DIR / "index.html")
 
-    app.mount("/dashboard", StaticFiles(directory=str(DASHBOARD_DIR)), name="dashboard")
+    app.mount("/", StaticFiles(directory=str(DASHBOARD_DIR)), name="dashboard")
