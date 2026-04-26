@@ -136,6 +136,8 @@ reward = Σ (gap_closure × weight) + worst_metric_bonus
 - Actions that worsen metrics are penalized at **-0.05 per unit**
 - A **+2.0 bonus** rewards targeting the worst metric first
 
+> **Note on Negative Rewards:** At the base environment level, the agent accumulates negative penalties (-8, -6, -4) for every step it remains above target thresholds. This "survival penalty" forces the LLM to learn urgency and prioritize the fastest path to recovery.
+
 #### Scoring Example
 
 Given a crisis state: `latency=280ms, cost=$620/hr, carbon=380` (all above target):
