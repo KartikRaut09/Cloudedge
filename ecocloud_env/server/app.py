@@ -9,8 +9,7 @@ from fastapi.responses import FileResponse
 from .environment import EcoCloudEnvironment
 from ..models import CloudAction, CloudObservation
 
-env = EcoCloudEnvironment()
-app = create_app(env, CloudAction, CloudObservation)
+app = create_app(EcoCloudEnvironment, CloudAction, CloudObservation)
 
 
 @app.get("/health")
