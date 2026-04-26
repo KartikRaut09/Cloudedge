@@ -67,7 +67,6 @@ We fine-tuned **Qwen2.5-0.5B-Instruct** using TRL's **Group Relative Policy Opti
 
 ## 🔬 Deep Dive: Technical Implementation & Training Evidence
 
-*(This section is for judges evaluating the 10% Pipeline & Engineering criteria)*
 
 ### Training Pipeline Setup (GRPO)
 | Parameter | Value |
