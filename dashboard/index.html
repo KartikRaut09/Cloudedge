@@ -1,59 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CloudEdge</title>
-    <meta name="description" content="Real-time visualization of a multi-agent cloud crisis simulator where three AI agents negotiate latency, cost, and carbon trade-offs under pressure.">
+    <meta name="description"
+        content="Real-time visualization of a multi-agent cloud crisis simulator where three AI agents negotiate latency, cost, and carbon trade-offs under pressure.">
     <link rel="icon" href="/logo_w.png" media="(prefers-color-scheme: light)" />
     <link rel="icon" href="/logo.png" media="(prefers-color-scheme: dark)" />
 
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              primary: 'rgba(255, 255, 255, 0.9)',
-              surface: '#202020',
-              accent: '#2eaadc',
-              'accent-hover': '#0075de',
-              background: '#191919',
-              'surface-alt': '#2f2f2f',
-              secondary: 'rgba(255, 255, 255, 0.5)',
-              muted: 'rgba(255, 255, 255, 0.3)',
-              'badge-bg': 'rgba(46, 170, 220, 0.15)',
-              'badge-text': '#2eaadc',
-              success: '#2a9d99',
-              warning: '#dd5b00',
-              crisis: '#e03e3e',
-            },
-            fontFamily: {
-              sans: ['Inter', 'sans-serif'],
-            },
-            boxShadow: {
-              card: '0px 4px 18px rgba(0,0,0,0.5), 0px 0.8px 2.925px rgba(0,0,0,0.3)',
-              deep: '0px 14px 28px rgba(0,0,0,0.6), 0px 23px 52px rgba(0,0,0,0.7)',
-            },
-            borderColor: {
-              light: 'rgba(255, 255, 255, 0.08)',
-            },
-            letterSpacing: {
-              'display-64': '-2.125px',
-              'display-54': '-1.875px',
-              'display-48': '-1.5px',
-              'subheading': '-0.625px',
-              'card': '-0.25px',
-              'body-large': '-0.125px',
-              'badge': '0.125px',
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: 'rgba(255, 255, 255, 0.9)',
+                        surface: '#202020',
+                        accent: '#2eaadc',
+                        'accent-hover': '#0075de',
+                        background: '#191919',
+                        'surface-alt': '#2f2f2f',
+                        secondary: 'rgba(255, 255, 255, 0.5)',
+                        muted: 'rgba(255, 255, 255, 0.3)',
+                        'badge-bg': 'rgba(46, 170, 220, 0.15)',
+                        'badge-text': '#2eaadc',
+                        success: '#2a9d99',
+                        warning: '#dd5b00',
+                        crisis: '#e03e3e',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        card: '0px 4px 18px rgba(0,0,0,0.5), 0px 0.8px 2.925px rgba(0,0,0,0.3)',
+                        deep: '0px 14px 28px rgba(0,0,0,0.6), 0px 23px 52px rgba(0,0,0,0.7)',
+                    },
+                    borderColor: {
+                        light: 'rgba(255, 255, 255, 0.08)',
+                    },
+                    letterSpacing: {
+                        'display-64': '-2.125px',
+                        'display-54': '-1.875px',
+                        'display-48': '-1.5px',
+                        'subheading': '-0.625px',
+                        'card': '-0.25px',
+                        'body-large': '-0.125px',
+                        'badge': '0.125px',
+                    }
+                }
             }
-          }
         }
-      }
     </script>
     <style type="text/tailwindcss">
-      @layer utilities {
+        @layer utilities {
         .metric-bar { transition: width 0.3s ease; }
       }
       canvas { max-width: 100%; }
@@ -63,14 +65,17 @@
       ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
     </style>
 </head>
-<body class="bg-background text-primary font-sans antialiased min-h-screen selection:bg-accent selection:text-white flex flex-col">
+
+<body
+    class="bg-background text-primary font-sans antialiased min-h-screen selection:bg-accent selection:text-white flex flex-col">
 
     <!-- Crisis overlay flash (handles crisis visual) -->
-    <div id="crisisOverlay" class="pointer-events-none fixed inset-0 z-50 transition-opacity duration-300 opacity-0 bg-red-500/20"></div>
+    <div id="crisisOverlay"
+        class="pointer-events-none fixed inset-0 z-50 transition-opacity duration-300 opacity-0 bg-red-500/20"></div>
 
     <!-- Header -->
     <header class="bg-[#111113] border-b border-light sticky top-0 z-50">
-        
+
         <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 xl:px-16 h-20 flex items-center justify-between w-full">
             <div class="flex items-center gap-3 sm:gap-4">
                 <div class="w-8 h-8 relative shrink-0">
@@ -78,43 +83,43 @@
                 </div>
                 <div>
                     <h1 class="text-[18px] sm:text-[22px] font-bold leading-[1.27] tracking-card">CloudEdge</h1>
-                    <p class="text-[12px] sm:text-[14px] text-secondary font-medium tracking-normal mt-[-2px] hidden sm:block">Multi-Agent Cloud Crisis Simulator</p>
+                    <p
+                        class="text-[12px] sm:text-[14px] text-secondary font-medium tracking-normal mt-[-2px] hidden sm:block">
+                        Multi-Agent Cloud Crisis Simulator</p>
                 </div>
             </div>
             <div class="flex items-center gap-2 sm:gap-3">
-                <a href="https://youtu.be/_wTe7kmyAZg" target="_blank" class="hidden sm:flex items-center gap-2 bg-[#e03e3e]/10 hover:bg-[#e03e3e]/20 text-[#e03e3e] px-3 py-1.5 rounded-full text-[12px] font-semibold tracking-badge border border-[#e03e3e]/20 shrink-0 transition-colors">
-                    ▶ Watch Demo
-                </a>
-                <div class="hidden lg:flex items-center gap-2 bg-background text-secondary px-3 py-1.5 rounded-full text-[12px] font-semibold tracking-badge border border-light shrink-0">
-                    Meta PyTorch OpenEnv Hackathon X Scaler 
+                <div
+                    class="hidden lg:flex items-center gap-2 bg-background text-secondary px-3 py-1.5 rounded-full text-[12px] font-semibold tracking-badge border border-light shrink-0">
+                    Meta PyTorch OpenEnv Hackathon X Scaler
                 </div>
             </div>
         </div>
     </header>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 xl:px-16 w-full py-8 md:py-10 flex-1 grid grid-cols-1 xl:grid-cols-12 gap-8 lg:gap-12">
-        
+    <main
+        class="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 xl:px-16 w-full py-8 md:py-10 flex-1 grid grid-cols-1 xl:grid-cols-12 gap-8 lg:gap-12">
+
         <!-- Left Column: Metrics & Charts (Spans 8 cols) -->
         <section class="xl:col-span-8 flex flex-col gap-8">
-            
+
             <!-- Live Metrics Cards -->
-             <div class="w-full col-span-1">
-                    <video src="https://github.com/bhave5h/ROBO/raw/40502a986887057c33e6256c68ae005e99fcb5f2/public/hero.mp4" autoplay loop muted alt="hero" class="w-full h-full object-cover rounded-xl border border-light shadow-card">
-                </div>
-                
+
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 xl:gap-6">
-                
+
                 <!-- Latency -->
-                <div id="latencyCard" class="bg-surface rounded-xl border border-light shadow-card p-5 xl:p-6 flex flex-col gap-3 transition">
+                <div id="latencyCard"
+                    class="bg-surface rounded-xl border border-light shadow-card p-5 xl:p-6 flex flex-col gap-3 transition">
                     <div class="flex justify-between items-center text-xl">
                         <div class="flex items-center gap-2 font-semibold text-primary">
-                        Latency
+                            Latency
                         </div>
                     </div>
                     <span class="text-secondary text-[13px]">Target: &lt;150ms</span>
                     <div class="flex items-end gap-1">
-                        <span id="latencyValue" class="text-xl font-bold leading-[1] tracking-card text-primary">280.0</span>
+                        <span id="latencyValue"
+                            class="text-xl font-bold leading-[1] tracking-card text-primary">280.0</span>
                         <span class="text-[14px] sm:text-[16px] text-secondary font-medium mb-1">ms</span>
                     </div>
                     <div class="w-full bg-background rounded-full h-1.5 overflow-hidden mt-1">
@@ -124,7 +129,8 @@
                 </div>
 
                 <!-- Cost -->
-                <div id="costCard" class="bg-surface rounded-xl border border-light shadow-card p-5 xl:p-6 flex flex-col gap-3 transition">
+                <div id="costCard"
+                    class="bg-surface rounded-xl border border-light shadow-card p-5 xl:p-6 flex flex-col gap-3 transition">
                     <div class="flex justify-between items-center text-xl">
                         <div class="flex items-center gap-2 font-semibold text-primary">
                             Cost
@@ -132,7 +138,8 @@
                     </div>
                     <span class="text-secondary text-[13px]">Target: &lt;$400</span>
                     <div class="flex items-end gap-1">
-                        <span id="costValue" class="text-xl font-bold leading-[1] tracking-card text-primary">620.0</span>
+                        <span id="costValue"
+                            class="text-xl font-bold leading-[1] tracking-card text-primary">620.0</span>
                         <span class="text-[14px] sm:text-[16px] text-secondary font-medium mb-1">$/hr</span>
                     </div>
                     <div class="w-full bg-background rounded-full h-1.5 overflow-hidden mt-1">
@@ -142,7 +149,8 @@
                 </div>
 
                 <!-- Carbon -->
-                <div id="carbonCard" class="bg-surface rounded-xl border border-light shadow-card p-5 xl:p-6 flex flex-col gap-3 transition">
+                <div id="carbonCard"
+                    class="bg-surface rounded-xl border border-light shadow-card p-5 xl:p-6 flex flex-col gap-3 transition">
                     <div class="flex justify-between items-center text-xl">
                         <div class="flex items-center gap-2 font-semibold text-primary">
                             Carbon
@@ -150,11 +158,13 @@
                     </div>
                     <span class="text-secondary text-[13px]">Target: &lt;220</span>
                     <div class="flex items-end gap-1">
-                        <span id="carbonValue" class="text-xl font-bold leading-[1] tracking-card text-primary">380.0</span>
+                        <span id="carbonValue"
+                            class="text-xl font-bold leading-[1] tracking-card text-primary">380.0</span>
                         <span class="text-[14px] sm:text-[16px] text-secondary font-medium mb-1">CO₂</span>
                     </div>
                     <div class="w-full bg-background rounded-full h-1.5 overflow-hidden mt-1">
-                        <div id="carbonBar" class="bg-primary h-full metric-bar rounded-full" style="width: 63.3%"></div>
+                        <div id="carbonBar" class="bg-primary h-full metric-bar rounded-full" style="width: 63.3%">
+                        </div>
                     </div>
                     <div id="carbonDelta" class="text-sm font-medium min-h-[18px]"></div>
                 </div>
@@ -163,11 +173,16 @@
             <!-- Charts Panel -->
             <div class="bg-surface rounded-xl border border-light shadow-card p-5 md:p-8">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
-                    <h2 class="text-2xl font-bold tracking-subheading text-primary leading-[1.23]">Real-Time Metrics</h2>
-                    <div class="flex flex-wrap items-center gap-4 text-[13px] sm:text-[14px] text-secondary font-medium">
-                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-accent"></span>Latency</span>
-                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-warning"></span>Cost</span>
-                        <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-success"></span>Carbon</span>
+                    <h2 class="text-2xl font-bold tracking-subheading text-primary leading-[1.23]">Real-Time Metrics
+                    </h2>
+                    <div
+                        class="flex flex-wrap items-center gap-4 text-[13px] sm:text-[14px] text-secondary font-medium">
+                        <span class="flex items-center gap-1.5"><span
+                                class="w-2.5 h-2.5 rounded-full bg-accent"></span>Latency</span>
+                        <span class="flex items-center gap-1.5"><span
+                                class="w-2.5 h-2.5 rounded-full bg-warning"></span>Cost</span>
+                        <span class="flex items-center gap-1.5"><span
+                                class="w-2.5 h-2.5 rounded-full bg-success"></span>Carbon</span>
                     </div>
                 </div>
                 <div class="w-full overflow-hidden" style="position: relative; height:320px;">
@@ -179,7 +194,8 @@
             <div class="bg-surface rounded-xl border border-light shadow-card p-5 md:p-8">
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4">
                     <h2 class="text-2xl font-bold tracking-subheading text-primary leading-[1.23]">Episode Progress</h2>
-                    <div class="flex flex-wrap items-center gap-3 sm:gap-4 text-[13px] sm:text-[14px] text-secondary bg-background px-3 sm:px-4 py-2 rounded-lg border border-light">
+                    <div
+                        class="flex flex-wrap items-center gap-3 sm:gap-4 text-[13px] sm:text-[14px] text-secondary bg-background px-3 sm:px-4 py-2 rounded-lg border border-light">
                         <span>Step: <strong id="stepCount" class="text-primary">0</strong>/30</span>
                         <span class="w-px h-4 bg-white/10 hidden sm:block"></span>
                         <span>Reward: <strong id="totalReward" class="text-primary">0.0</strong></span>
@@ -189,45 +205,58 @@
                         <span id="loadBadge">Load: <strong id="loadLevel" class="text-warning">critical</strong></span>
                     </div>
                 </div>
-                
+
                 <div class="relative w-full h-2.5 bg-background rounded-full mt-6 mb-4 overflow-hidden shadow-inner">
-                    <div id="stepProgressBar" class="absolute top-0 left-0 h-full bg-accent rounded-full transition-all duration-300" style="width: 0%"></div>
+                    <div id="stepProgressBar"
+                        class="absolute top-0 left-0 h-full bg-accent rounded-full transition-all duration-300"
+                        style="width: 0%"></div>
                     <!-- Markers would ideally be injected dynamically, leaving empty container as per original -->
                     <div id="stepMarkers" class="absolute top-0 w-full h-full"></div>
                 </div>
-                
-                <div id="successIndicator" class="flex items-center gap-2 text-[13px] sm:text-[14px] font-medium text-secondary border-t border-light pt-4 mt-2">
+
+                <div id="successIndicator"
+                    class="flex items-center gap-2 text-[13px] sm:text-[14px] font-medium text-secondary border-t border-light pt-4 mt-2">
                     <span id="successIcon">❌</span>
                     <span id="successText">Not yet meeting all targets</span>
                 </div>
             </div>
-            
+
         </section>
 
         <!-- Right Column: Boardroom & Controls (Spans 4 cols) -->
         <section class="xl:col-span-4 flex flex-col gap-8">
-            
+
             <!-- Controls -->
             <div class="bg-surface rounded-xl border border-light shadow-card p-5 xl:p-6">
-                <h2 class="text-md sm:text-md font-bold tracking-card text-primary leading-[1.27] mb-5">Simulation Controls</h2>
-                
+                <h2 class="text-md sm:text-md font-bold tracking-card text-primary leading-[1.27] mb-5">Simulation
+                    Controls</h2>
+
                 <div class="flex flex-col gap-4 sm:gap-5">
                     <div class="grid grid-cols-2 gap-3">
-                        <button id="btnRun" onclick="startSimulation()" class="bg-white/5 hover:bg-white/10 text-primary text-sm font-semibold py-2.5 px-4 rounded border border-light transform active:scale-[0.98] transition-all flex justify-center items-center gap-2">
+                        <button id="btnRun" onclick="startSimulation()"
+                            class="bg-white/5 hover:bg-white/10 text-primary text-sm font-semibold py-2.5 px-4 rounded border border-light transform active:scale-[0.98] transition-all flex justify-center items-center gap-2">
                             <span>▶</span> Run
                         </button>
-                        <button id="btnReset" onclick="resetSimulation()" class="bg-white/5 hover:bg-white/10 text-primary text-sm font-semibold py-2.5 px-4 rounded border border-light transform active:scale-[0.98] transition-all flex justify-center items-center gap-2">
+                        <button id="btnReset" onclick="resetSimulation()"
+                            class="bg-white/5 hover:bg-white/10 text-primary text-sm font-semibold py-2.5 px-4 rounded border border-light transform active:scale-[0.98] transition-all flex justify-center items-center gap-2">
                             <span>↺</span> Reset
                         </button>
                     </div>
 
                     <div class="flex flex-col sm:flex-row gap-3 mt-1">
-                        <div class="flex-1 bg-background p-3 sm:p-3.5 rounded-xl border border-light flex flex-col gap-2.5">   
-                            <label class="text-[11px] sm:text-[12px] font-semibold text-secondary tracking-badge uppercase">Policy Mode</label>
+                        <div
+                            class="flex-1 bg-background p-3 sm:p-3.5 rounded-xl border border-light flex flex-col gap-2.5">
+                            <label
+                                class="text-[11px] sm:text-[12px] font-semibold text-secondary tracking-badge uppercase">Policy
+                                Mode</label>
                             <div class="flex flex-col gap-1.5 bg-white/[0.03] p-1 rounded">
-                                <button id="modeHeuristic" onclick="setMode('heuristic')" class="w-full bg-surface border border-light text-primary text-[12px] sm:text-[13px] font-semibold py-1.5 px-2 rounded transition-colors text-center shadow-sm">Heuristic</button>
-                                <button id="modeTrained" onclick="setMode('trained')" class="w-full bg-transparent border border-transparent text-secondary hover:text-primary text-[12px] sm:text-[13px] font-medium py-1.5 px-2 rounded transition-colors text-center">Q-Trained</button>
-                                <button id="modeLlm" onclick="setMode('llm')" class="w-full bg-transparent border border-transparent text-secondary hover:text-primary text-[12px] sm:text-[13px] font-medium py-1.5 px-2 rounded transition-colors text-center">LLM (GRPO)</button>
+                                <button id="modeHeuristic" onclick="setMode('heuristic')"
+                                    class="w-full bg-surface border border-light text-primary text-[12px] sm:text-[13px] font-semibold py-1.5 px-2 rounded transition-colors text-center shadow-sm">Heuristic</button>
+                                <button id="modeTrained" onclick="setMode('trained')"
+                                    class="w-full bg-transparent border border-transparent text-secondary hover:text-primary text-[12px] sm:text-[13px] font-medium py-1.5 px-2 rounded transition-colors text-center">Q-Trained</button>
+                                <button id="modeLlm" onclick="setMode('llm')"
+                                    class="w-full bg-transparent border border-transparent text-secondary hover:text-primary text-[12px] sm:text-[13px] font-medium py-1.5 px-2 rounded transition-colors text-center">LLM
+                                    (GRPO)</button>
                             </div>
                         </div>
                     </div>
@@ -235,30 +264,44 @@
             </div>
 
             <!-- Boardroom Chat -->
-            <div class="bg-surface rounded-xl border border-light shadow-card flex flex-col overflow-hidden h-[400px] xl:h-[450px]">
-                <div class="px-5 sm:px-6 py-4 sm:py-5 border-b border-light flex items-center justify-between bg-surface z-10 shrink-0">
+            <div
+                class="bg-surface rounded-xl border border-light shadow-card flex flex-col overflow-hidden h-[400px] xl:h-[450px]">
+                <div
+                    class="px-5 sm:px-6 py-4 sm:py-5 border-b border-light flex items-center justify-between bg-surface z-10 shrink-0">
                     <h2 class="text-lg font-bold tracking-card text-primary leading-[1.27]">Boardroom</h2>
                 </div>
-                
+
                 <div id="chatContainer" class="flex-1 overflow-y-auto p-4 sm:p-6 bg-background flex flex-col gap-4">
-                    <div class="bg-surface rounded-[12px] p-5 sm:p-6 border border-light shadow-sm text-center flex flex-col items-center">
+                    <div
+                        class="bg-surface rounded-[12px] p-5 sm:p-6 border border-light shadow-sm text-center flex flex-col items-center">
                         <div class="text-[32px] sm:text-[40px] mb-3 opacity-50">🏛️</div>
-                        <p class="text-[15px] sm:text-[16px] font-semibold text-primary mb-2">The boardroom is ready.</p>
-                        <p class="text-[13px] sm:text-[14px] text-secondary mb-3 leading-relaxed">Three agents will negotiate each action: <br/> <strong class="text-primary font-semibold">ResourceAgent</strong> (latency)<br/> <strong class="text-primary font-semibold">CostAgent</strong> (spending)<br/> <strong class="text-primary font-semibold">SustainabilityAgent</strong> (carbon).</p>
-                        <p class="text-[13px] sm:text-[14px] text-secondary font-semibold mt-2">Press<span class="text-white"> RUN</span> Episode to begin.</p>
+                        <p class="text-[15px] sm:text-[16px] font-semibold text-primary mb-2">The boardroom is ready.
+                        </p>
+                        <p class="text-[13px] sm:text-[14px] text-secondary mb-3 leading-relaxed">Three agents will
+                            negotiate each action: <br /> <strong
+                                class="text-primary font-semibold">ResourceAgent</strong> (latency)<br /> <strong
+                                class="text-primary font-semibold">CostAgent</strong> (spending)<br /> <strong
+                                class="text-primary font-semibold">SustainabilityAgent</strong> (carbon).</p>
+                        <p class="text-[13px] sm:text-[14px] text-secondary font-semibold mt-2">Press<span
+                                class="text-white"> RUN</span> Episode to begin.</p>
                     </div>
                 </div>
-                
+
                 <div class="border-t border-light bg-surface z-10 shrink-0 p-3 sm:p-4 flex justify-center items-center">
-                    <span id="chatStatus" class="text-[12px] sm:text-[13px] font-medium text-secondary">Waiting...</span>
+                    <span id="chatStatus"
+                        class="text-[12px] sm:text-[13px] font-medium text-secondary">Waiting...</span>
                 </div>
             </div>
 
             <!-- Action History -->
-            <div class="bg-surface rounded-xl border border-light shadow-card p-5 xl:p-6 flex flex-col overflow-hidden h-[300px] xl:h-[350px]">
-                <h2 class="text-[20px] sm:text-[22px] font-bold tracking-card text-primary leading-[1.27] mb-4 shrink-0">Action Timeline</h2>
+            <div
+                class="bg-surface rounded-xl border border-light shadow-card p-5 xl:p-6 flex flex-col overflow-hidden h-[300px] xl:h-[350px]">
+                <h2
+                    class="text-[20px] sm:text-[22px] font-bold tracking-card text-primary leading-[1.27] mb-4 shrink-0">
+                    Action Timeline</h2>
                 <div id="timelineContainer" class="flex-1 overflow-y-auto pr-2 flex flex-col gap-3">
-                    <div class="text-[13px] sm:text-[14px] text-muted italic text-center py-6 sm:py-8">Actions will appear here during simulation</div>
+                    <div class="text-[13px] sm:text-[14px] text-muted italic text-center py-6 sm:py-8">Actions will
+                        appear here during simulation</div>
                 </div>
             </div>
 
@@ -267,15 +310,21 @@
 
     <!-- Footer -->
     <footer class="bg-surface border-t border-light w-full mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 xl:px-16 py-6 sm:py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 xl:px-16 py-6 sm:py-8 flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="text-[13px] sm:text-[14px] text-secondary text-center md:text-left">
                 Built for <strong class="text-primary">Meta PyTorch OpenEnv Hackathon Grand Finale</strong>
             </div>
-            <div class="text-[13px] sm:text-[14px] text-secondary text-center md:text-right flex flex-wrap justify-center gap-2">
+            <div
+                class="text-[13px] sm:text-[14px] text-secondary text-center md:text-right flex flex-wrap justify-center gap-2">
                 <span class="hidden md:inline">Themes:</span>
-                <span class="bg-background px-2 py-0.5 rounded text-primary font-medium text-[12px] border border-light">Multi-Agent</span>
-                <span class="bg-background px-2 py-0.5 rounded text-primary font-medium text-[12px] border border-light">Long-Horizon</span>
-                <span class="bg-background px-2 py-0.5 rounded text-primary font-medium text-[12px] border border-light">World Models</span>
+                <span
+                    class="bg-background px-2 py-0.5 rounded text-primary font-medium text-[12px] border border-light">Multi-Agent</span>
+                <span
+                    class="bg-background px-2 py-0.5 rounded text-primary font-medium text-[12px] border border-light">Long-Horizon</span>
+                <span
+                    class="bg-background px-2 py-0.5 rounded text-primary font-medium text-[12px] border border-light">World
+                    Models</span>
             </div>
         </div>
     </footer>
@@ -291,29 +340,30 @@
 
         // Override setMode logic to update Tailwind buttons visually
         const originalSetMode = window.setMode;
-        window.setMode = function(mode) {
-             if (originalSetMode) {
-                 originalSetMode(mode);
-             } else {
-                 console.warn("setMode not found. Fallback logic triggered.");
-             }
-             
-             const modes = ['heuristic', 'trained', 'llm'];
-             const btnIds = {'heuristic': 'modeHeuristic', 'trained': 'modeTrained', 'llm': 'modeLlm'};
+        window.setMode = function (mode) {
+            if (originalSetMode) {
+                originalSetMode(mode);
+            } else {
+                console.warn("setMode not found. Fallback logic triggered.");
+            }
 
-             modes.forEach(m => {
-                 const btn = document.getElementById(btnIds[m]);
-                 if (!btn) return;
-                 if (m === mode) {
-                     btn.className = "w-full bg-surface border border-light text-primary text-[12px] sm:text-[13px] font-semibold py-1.5 px-2 rounded transition-colors text-center shadow-sm";
-                 } else {
-                     btn.className = "w-full bg-transparent border border-transparent text-secondary hover:text-primary text-[12px] sm:text-[13px] font-medium py-1.5 px-2 rounded transition-colors text-center";
-                 }
-             });
+            const modes = ['heuristic', 'trained', 'llm'];
+            const btnIds = { 'heuristic': 'modeHeuristic', 'trained': 'modeTrained', 'llm': 'modeLlm' };
+
+            modes.forEach(m => {
+                const btn = document.getElementById(btnIds[m]);
+                if (!btn) return;
+                if (m === mode) {
+                    btn.className = "w-full bg-surface border border-light text-primary text-[12px] sm:text-[13px] font-semibold py-1.5 px-2 rounded transition-colors text-center shadow-sm";
+                } else {
+                    btn.className = "w-full bg-transparent border border-transparent text-secondary hover:text-primary text-[12px] sm:text-[13px] font-medium py-1.5 px-2 rounded transition-colors text-center";
+                }
+            });
         }
-        
+
         // Ensure buttons sync with the default mode on load
         window.setMode(currentMode || 'heuristic');
     </script>
 </body>
+
 </html>
